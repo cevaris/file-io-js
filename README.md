@@ -1,9 +1,13 @@
 # file-io-js
 Javascript File IO 
 
-
 yarn init
 
-npm install commander
+# https://github.com/tj/commander.js
+yarn add commander
+yarn add typescript
+yarn add ts-node
 
-touch index.js
+tsc --init
+npm i @types/node
+tsc -w
