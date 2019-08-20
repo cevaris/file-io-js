@@ -1,0 +1,12 @@
+{
+  "name": "file-io-js",
+  "version": "1.0.0",
+  "description": "file input output CLI app",
+  "main": "index.js",
+  "repository": "git@github.com:cevaris/file-io-js.git",
+  "author": "Adam Cardenas <cevaris@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^3.0.0"
+  }
+}
