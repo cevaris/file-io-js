@@ -1,5 +1,9 @@
+import * as fs from 'fs';
+
 function writeToFile(filename: string, content: string): void {
-    console.log('writeToFile', filename, content);
+    fs.writeFile(filename, content, 'utf8', (err) => {
+        if (err) console.error(err);
+    });
 }
 
 export { writeToFile };
