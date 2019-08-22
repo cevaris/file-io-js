@@ -1,7 +1,7 @@
 import * as program from 'commander';
 import { readFile } from './src/readFile';
 import { writeToFile } from './src/writeToFile';
-
+import { numberFile } from './src/numberFile';
 
 // const cmd = process.argv[2];
 // if (cmd == 'write') {
@@ -25,9 +25,24 @@ program
     .description('read to file')
     .action(readFile);
 
+program
+    .command('numberFile <file>')
+    .description('increment/decrement a number in a file')
+    .option('-i --increment', 'increment value')
+    .option('-d --decrement', 'decrement value')
+    .action((file, p) => {
+        if (p.increment && p.decrement) {
+            console.error('either increment or decrement can be invoked, not both');
+            program.outputHelp();
+        }
+
+        numberFile(file, p.increment, p.decrement);
+    });
+
+
+program.parse(process.argv);
+
 //  prints help message if no command is provided
 if (process.argv[2] === undefined) {
     program.outputHelp();
 }
-
-program.parse(process.argv);
