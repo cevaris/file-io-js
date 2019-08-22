@@ -19,11 +19,11 @@ async function numberFileAsync(filename: string, action: Action): Promise<void> 
     if (fileExists == true) {
         // read in current number value as a string (utf8) and convert it to number
         const numberStr: string = await readFile(filename, { encoding: 'utf8' });
-        parsedNumber = parseInt(numberStr, 10);
+        parsedNumber = Number(numberStr);
 
         // confirm the parsedNumber is an actual number
         if (isNaN(parsedNumber)) {
-            return Promise.reject(Error(`${parsedNumber} is not a number.`));
+            return Promise.reject(Error(`${numberStr} is not a number.`));
         }
     }
 
