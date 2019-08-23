@@ -1,9 +1,10 @@
 import * as fs from 'fs';
+import * as util from 'util';
 
-function writeToFile(filename: string, content: string): void {
-    fs.writeFile(filename, content, {}, (err) => {
-        if (err) console.error(err);
-    });
+const writeFilePromise = util.promisify(fs.writeFile);
+
+async function writeToFile(filename: string, content: string): Promise<void> {
+    return await writeFilePromise(filename, content, {});
 }
 
 export { writeToFile };

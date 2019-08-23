@@ -1,28 +1,30 @@
 import { readFile } from '../readFile';
-import { mkTmpFile } from '../../tests/utils';
+import { writeTestFile, mkTmpFileName, unlinkTestFile } from '../../tests/utils';
 import logger from '../logger';
 
 let infoLogMock: jest.SpyInstance<void, [string]>;
 let errorLogMock: jest.SpyInstance<void, [Error]>;
+let testFileName: string = '';
 
 beforeEach(() => {
+    testFileName = mkTmpFileName();
     infoLogMock = jest.spyOn(logger, 'info').mockImplementation();
     errorLogMock = jest.spyOn(logger, 'error').mockImplementation();
 });
 
-afterEach(() => {
+afterEach(async () => {
     jest.restoreAllMocks();
+    await unlinkTestFile(testFileName);
 })
 
 test('read from an existing file', async () => {
     const testData = 'some test data';
 
-    await mkTmpFile(testData, async (fileName: string) => {
-        await readFile(fileName);
+    await writeTestFile(testFileName, testData);
+    await readFile(testFileName);
 
-        expect(infoLogMock).toHaveBeenCalledTimes(1);
-        expect(infoLogMock).toHaveBeenCalledWith(testData);
-    });
+    expect(infoLogMock).toHaveBeenCalledTimes(1);
+    expect(infoLogMock).toHaveBeenCalledWith(testData);
 });
 
 test('read from file that does not exist', async () => {
@@ -31,7 +33,7 @@ test('read from file that does not exist', async () => {
 
     expect(infoLogMock).toHaveBeenCalledTimes(0);
     expect(errorLogMock).toHaveBeenCalledTimes(1);
-    
+
     const expectedError = `ENOENT: no such file or directory, open '${dneFile}'`;
     const error: Error = errorLogMock.mock.calls[0][0];
     expect(error.message).toEqual(expectedError);
