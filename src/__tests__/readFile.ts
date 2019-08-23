@@ -25,6 +25,8 @@ test('read from an existing file', async () => {
 
     expect(infoLogMock).toHaveBeenCalledTimes(1);
     expect(infoLogMock).toHaveBeenCalledWith(testData);
+
+    expect(errorLogMock).toHaveBeenCalledTimes(0);
 });
 
 test('read from file that does not exist', async () => {

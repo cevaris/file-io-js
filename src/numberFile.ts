@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as util from 'util';
+import logger from './logger';
 
 const exists = util.promisify(fs.exists);
 const readFile = util.promisify(fs.readFile);
@@ -26,10 +27,10 @@ async function numberFileAsync(filename: string, action: Action): Promise<void> 
         }
     }
 
-    return writeFile(filename, parsedNumber + action));
+    return writeFile(filename, parsedNumber + action);
 }
 
-function numberFile(filename: string, increment: boolean, decrement: boolean): void {
+async function numberFile(filename: string, increment: boolean, decrement: boolean): Promise<void> {
     let action: Action = Action.UNKNOWN;
     if (increment) {
         action = Action.INCREMENT;
@@ -38,9 +39,9 @@ function numberFile(filename: string, increment: boolean, decrement: boolean): v
         action = Action.DECREMENT;
     }
 
-    numberFileAsync(filename, action)
-        .then(() => console.log(`updated ${filename} by ${action}`))
-        .catch((err: Error) => console.error(err.stack));
+    return numberFileAsync(filename, action)
+        .then(() => logger.info(`updated ${filename} by ${action}`))
+        .catch((err: Error) => logger.error(err));
 }
 
 export { numberFile };

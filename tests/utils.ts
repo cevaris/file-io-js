@@ -3,7 +3,6 @@ import * as util from 'util';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { promisify } from 'util';
-import { file } from '@babel/types';
 
 const readFilePromise = promisify(fs.readFile);
 const writeFilePromise = util.promisify(fs.writeFile);
