@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-    infoLogMock.mockRestore();
+    jest.restoreAllMocks();
 })
 
 test('read from an existing file', async () => {
@@ -26,8 +26,13 @@ test('read from an existing file', async () => {
 });
 
 test('read from file that does not exist', async () => {
-    await readFile('/file/does/not/exist');
+    const dneFile = '/file/does/not/exist';
+    await readFile(dneFile);
 
     expect(infoLogMock).toHaveBeenCalledTimes(0);
     expect(errorLogMock).toHaveBeenCalledTimes(1);
+    
+    const expectedError = `ENOENT: no such file or directory, open '${dneFile}'`;
+    const error: Error = errorLogMock.mock.calls[0][0];
+    expect(error.message).toEqual(expectedError);
 });
