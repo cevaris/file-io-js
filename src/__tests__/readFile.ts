@@ -1,8 +1,8 @@
 import { readFile } from '../readFile';
-import { mkTmpFile } from '../../tests/utils';
+import { mkTmpFile} from '../../tests/utils';
 import logger from '../logger';
 
-let logMessageMock: any;
+let logMessageMock: jest.SpyInstance<void, [string]>;
 
 beforeEach(() => {
     logMessageMock = jest.spyOn(logger, 'logMessage').mockImplementation();
