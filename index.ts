@@ -31,11 +31,6 @@ program
     .option('-i --increment', 'increment value')
     .option('-d --decrement', 'decrement value')
     .action((file, p) => {
-        if (p.increment && p.decrement) {
-            console.error('either increment or decrement can be invoked, not both');
-            program.outputHelp();
-        }
-
         numberFile(file, p.increment, p.decrement);
     });
 

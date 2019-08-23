@@ -50,3 +50,17 @@ test('increment then decrement a number file', async () => {
     const actualSecondRead = await readTestFile(testFileName);
     expect(actualSecondRead).toEqual('0');
 });
+
+test('increment and decrement are true', async () => {
+    await numberFile(testFileName, true, true);
+
+    expect(errorLogMock).toHaveBeenCalledTimes(1);
+    expect(infoLogMock).toHaveBeenCalledTimes(0);
+});
+
+test('increment and decrement are false', async () => {
+    await numberFile(testFileName, false, false);
+
+    expect(errorLogMock).toHaveBeenCalledTimes(1);
+    expect(infoLogMock).toHaveBeenCalledTimes(0);
+});

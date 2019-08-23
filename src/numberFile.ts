@@ -31,6 +31,10 @@ async function applyAction(filename: string, action: Action): Promise<void> {
 }
 
 async function numberFile(filename: string, increment: boolean, decrement: boolean): Promise<void> {
+    if ((increment && decrement) || (increment == false && decrement == false)) {
+        return logger.error(Error('either increment or decrement can be invoked, not both'));
+    }
+
     let action: Action = Action.UNKNOWN;
     if (increment) {
         action = Action.INCREMENT;
