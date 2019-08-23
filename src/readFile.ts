@@ -1,13 +1,11 @@
 import * as fs from 'fs';
+import logger from './logger';
+import * as util from 'util';
 
-function readFile(filename: string): void {
-    fs.readFile(filename, 'utf8', function (err, contents) {
-        if (!err) {
-            console.log(contents);
-        } else {
-            console.error(err);
-        }
-    });
+async function readFile(filename: string): Promise<void> {
+    await util.promisify(fs.readFile)(filename, 'utf8')
+        .then(logger.logMessage)
+        .catch(logger.logError);
 }
 
 export { readFile };

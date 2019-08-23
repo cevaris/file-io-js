@@ -5,7 +5,6 @@ const exists = util.promisify(fs.exists);
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
-
 enum Action {
     DECREMENT = -1,
     UNKNOWN = 0,
@@ -27,7 +26,7 @@ async function numberFileAsync(filename: string, action: Action): Promise<void> 
         }
     }
 
-    return writeFile(filename, parsedNumber + action);
+    return writeFile(filename, parsedNumber + action));
 }
 
 function numberFile(filename: string, increment: boolean, decrement: boolean): void {
