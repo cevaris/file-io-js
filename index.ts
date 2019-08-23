@@ -26,6 +26,11 @@ program
     .action(readFile);
 
 program
+    .command('find  <file> <term>')
+    .description('find the lines a term is found in a file')
+    .action((a, b) => console.log('find', a, b));
+
+program
     .command('numberFile <file>')
     .description('increment/decrement a number in a file')
     .option('-i --increment', 'increment value')
