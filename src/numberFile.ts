@@ -12,7 +12,7 @@ enum Action {
     INCREMENT = 1,
 }
 
-async function numberFileAsync(filename: string, action: Action): Promise<void> {
+async function applyAction(filename: string, action: Action): Promise<void> {
     let parsedNumber: number = 0;
 
     const fileExists: boolean = await exists(filename);
@@ -39,9 +39,12 @@ async function numberFile(filename: string, increment: boolean, decrement: boole
         action = Action.DECREMENT;
     }
 
-    return numberFileAsync(filename, action)
-        .then(() => logger.info(`updated ${filename} by ${action}`))
-        .catch((err: Error) => logger.error(err));
+    try {
+        await applyAction(filename, action);
+        logger.info(`updated ${filename} by ${action}`)
+    } catch (err) {
+        logger.error(err);
+    }
 }
 
 export { numberFile };
