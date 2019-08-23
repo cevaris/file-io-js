@@ -1,9 +1,9 @@
-function logError(err: Error): void {
+function error(err: Error): void {
     console.error(err);
 }
 
-function logMessage(message: string): void {
+function info(message: string): void {
     console.log(message);
 }
 
-export default { logError, logMessage }
+export default { error, info }
